@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Videos</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="navbar">
+    <nav class="navbar">
+        <nav class="nav-container">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="videos.html" class="current-page">Videos</a></li>
+            </ul>
+            <div class="logo-container">
+                <img src="images/infyte.png" width="250" height="87" alt="Logo">
+            </div>
+            <ul>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </nav>
+  </header>
+  <main class="main-content">
+    <channel>
+		Here is where you can view the most recent  videos from my channel! I have created over 1000 videos in the 8 years I have been making content, but around half of them have been deleted over the years and have become lost media. Although, I am always on the search to find any and all of these lost videos, so I might reupload them if they become found!<br><br>If you want even MORE content, I post life updates and vlogs on my second channel, David Valladares! If you want to see more of what my personal life is like, go check it out as well!
+    </channel>
+  <div id="video-container"></div>
+	<script>
+    const API_KEY = 'AIzaSyBClV3MUIyhOm1sNM1TeUCv19P42kJRrGI';
+const UPLOADS_PLAYLIST_ID = 'UUZ34jMYJ1Mv5qPSHRNudfUQ';
+async function fetchVideos() {
+  try {
+    const response = await fetch(
+      `https://www.googleapis.com/youtube/v3/playlistItems?key=${API_KEY}&playlistId=${UPLOADS_PLAYLIST_ID}&part=snippet&maxResults=50`
+    );
+    const data = await response.json();
+    const videoContainer = document.getElementById('video-container');
+    if (data.items) {
+      data.items.forEach(video => {
+        const videoCard = document.createElement('div');
+        videoCard.className = "video-card";
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube.com/embed/${video.snippet.resourceId.videoId}`;
+        iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+        iframe.allowFullscreen = true;
+        const videoTitle = document.createElement('div');
+        videoTitle.className = "video-title";
+        videoTitle.textContent = video.snippet.title;
+        videoCard.appendChild(iframe);
+        videoCard.appendChild(videoTitle);
+        videoContainer.appendChild(videoCard);
+      });
+    } else {
+      videoContainer.innerHTML = '<p>No videos found or invalid API Key/Playlist ID.</p>';
+    }
+  } catch (error) {
+    console.error('Error fetching videos:', error);
+    const videoContainer = document.getElementById('video-container');
+    videoContainer.innerHTML = '<p>Unable to fetch videos. Please try again later.</p>';
+  }
+}
+fetchVideos();
+  </script>
+</main>
+<footer>
+    <div class="social-links">
+        <a href="https://discord.com/invite/JsSwaDnsRS" target="_blank">
+            <img src="images/discord icon.png" alt="Discord icon">
+        </a>
+        <a href="https://x.com/infyte_official" target="_blank">
+            <img src="images/X icon.png" alt="Twitter icon">
+        </a>
+        <a href="https://www.youtube.com/@infyte_official" target="_blank">
+            <img src="images/youtube icon.png" alt="YouTube icon">
+        </a>
+    </div>
+        <handle class="social-links">
+            <a>@infyte_official</a>
+            <a>realdr.infinity@gmail.com</a>
+        </handle>
+</footer>
+</body>
+</html>
