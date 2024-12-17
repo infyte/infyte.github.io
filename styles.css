@@ -51,7 +51,7 @@ a:hover {
     text-shadow: 0 0 3px #00acff, 0 0 8px #00acff, 0 0 12px #00acff;
 }
 .main-content {
-    background: url("images/background.png") no-repeat center center;
+    background: url("background.png") no-repeat center center;
     background-size: cover;
     min-height: 500px;
     padding: 50px;
